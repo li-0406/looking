@@ -17,8 +17,12 @@ const Backstage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/rooms/findHotel/${id}`);
-        const hotel = await axios.get(`/hotels/find/${id}`);
+        const res = await axios.get(
+          `${process.env.REACT_APP_PUBLIC_URL}/rooms/findHotel/${id}`
+        );
+        const hotel = await axios.get(
+          `${process.env.REACT_APP_PUBLIC_URL}/hotels/find/${id}`
+        );
         setRooms(res.data);
         setHotel(hotel.data);
       } catch (error) {
