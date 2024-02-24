@@ -45,7 +45,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "predeploy": "npm run build",
+    "predeploy": "REACT_APP_PUBLIC_URL=https://lookingapi.onrender.com/api/v1 npm run build",
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
