@@ -63,7 +63,10 @@ const DeleteDialog = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.post(`/rooms/${id}`, newData);
+        const res = await axios.post(
+          `${process.env.REACT_APP_PUBLIC_URL}/rooms/${id}`,
+          newData
+        );
         if (res.status === 200) {
           handleClose();
           toast("新增完成");

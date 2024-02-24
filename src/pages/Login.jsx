@@ -25,7 +25,10 @@ const Login = () => {
     dispatch({ type: start_login });
     try {
       console.log(loginData);
-      const res = await axios.post("/auth/login", loginData);
+      const res = await axios.post(
+        `${process.env.REACT_APP_PUBLIC_URL}/auth/login`,
+        loginData
+      );
       console.log(res.data.userData);
       dispatch({ type: login_success, payload: res.data.userData });
       navigate("/");
