@@ -17,6 +17,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { OptionsContext } from "./context/OptionsContext.js";
 import { new_Options } from "./constants/actionTypes.js";
+import { areaList } from "../data/homeData.js";
 
 const Header = () => {
   const { city, date, options, dispatch } = useContext(OptionsContext);
@@ -64,15 +65,6 @@ const Header = () => {
 
   const [openCalendar, setOpenCalendar] = useState(false);
 
-  const areaList = [
-    { value: "台北", label: "台北" },
-    { value: "台中", label: "台中" },
-    { value: "蘇澳鎮", label: "蘇澳鎮" },
-    { value: "台南", label: "台南" },
-    { value: "高雄", label: "高雄" },
-    { value: "礁溪鄉", label: "礁溪鄉" },
-  ];
-
   const selectStyle = {
     control: (baseStyles, state) => ({
       ...baseStyles,
@@ -114,30 +106,6 @@ const Header = () => {
   const calendarRange = useRef(null);
   const peopleRef = useRef(null);
   const peopleRange = useRef(null);
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       calendarRef.current &&
-  //       !calendarRef.current.contains(event.target) &&
-  //       calendarRange.current &&
-  //       !calendarRange.current.contains(event.target)
-  //     ) {
-  //       setOpenCalendar(false);
-  //     }
-  //     if (
-  //       peopleRef.current &&
-  //       !peopleRef.current.contains(event.target) &&
-  //       peopleRange.current &&
-  //       !peopleRange.current.contains(event.target)
-  //     ) {
-  //       setopenPeople(false);
-  //     }
-  //   };
-  //   document.addEventListener("click", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, [calendarRef, peopleRef, calendarRange, peopleRange]);
 
   return (
     <div className="bg-slate-700 pb-20 relative">
@@ -154,21 +122,22 @@ const Header = () => {
               className="w-full px-3"
               options={areaList}
               styles={selectStyle}
-              onChange={setDestination}
+              onChange={(e) => setDestination(e.value)}
             />
           </div>
-          {destination}
           <div className="bg-gray-800 rounded-md pl-4 flex-1 relative flex items-center">
             <FontAwesomeIcon icon={faCalendar} className=" text-gray-400" />
             <input
               readOnly
               className="bg-gray-800 focus:outline-0 rounded p-3 w-full cursor-pointer"
-              v-model="input"
               placeholder={`${format(
                 dates[0].startDate,
                 "yyyy / MM月 / dd日"
               )} - ${format(dates[0].endDate, "yyyy / MM月 / dd日")}`}
-              onClick={() => setOpenCalendar(!openCalendar)}
+              onClick={() => {
+                setOpenCalendar(!openCalendar);
+                setopenPeople(false);
+              }}
               ref={calendarRef}
             />
             {openCalendar && (
@@ -188,9 +157,11 @@ const Header = () => {
             <FontAwesomeIcon icon={faPeopleGroup} className=" text-gray-400" />
             <input
               readOnly
-              onClick={() => setopenPeople(!openPeople)}
+              onClick={() => {
+                setopenPeople(!openPeople);
+                setOpenCalendar(false);
+              }}
               className="bg-gray-800 focus:outline-0 rounded p-3 cursor-pointer w-full"
-              v-model="input"
               placeholder={`${conditions.adult} 位成人 · ${conditions.children} 位小孩 · ${conditions.room} 間房`}
               ref={peopleRef}
             />

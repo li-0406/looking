@@ -63,7 +63,9 @@ const Backstage = () => {
   };
 
   const deleteOrder = async () => {
-    const res = await axios.delete(`/rooms/${id}/${deleteId}`);
+    const res = await axios.delete(
+      ` ${process.env.REACT_APP_PUBLIC_URL}/rooms/${id}/${deleteId}`
+    );
     console.log(res);
     if (res.status === 200) {
       setToastTf(true);

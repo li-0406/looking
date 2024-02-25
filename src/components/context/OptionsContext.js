@@ -2,7 +2,7 @@ import { createContext, useEffect, useReducer } from "react";
 import { new_Options, reset_Options } from "../constants/actionTypes";
 
 const INITIAL_STATE = {
-  city: "",
+  city: "台北",
   options: {
     adult: 1,
     children: 0,

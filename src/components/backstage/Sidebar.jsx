@@ -12,12 +12,12 @@ const Sidebar = () => {
       title: "訂房管理後台",
       links: [
         {
-          name: "orderslist",
+          name: "backOrderslist",
           labelname: "訂房訂單",
           icon: <AiOutlineShoppingCart />,
         },
         {
-          name: "hotelslist",
+          name: "backHotelslist",
           labelname: "飯店列表",
           icon: <AiOutlineShoppingCart />,
         },

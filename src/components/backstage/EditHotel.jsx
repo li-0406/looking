@@ -7,6 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { areaList, backType } from "../../data/homeData.js";
 import Select from "react-select";
 import axios from "axios";
 import Toast from "../Toast";
@@ -24,15 +25,6 @@ const DeleteDialog = ({
   const [inputValue, setInputValue] = useState("");
   const [destination, setDestination] = useState(""); //地區
 
-  const areaList = [
-    { value: "台北", label: "台北" },
-    { value: "台中", label: "台中" },
-    { value: "蘇澳鎮", label: "蘇澳鎮" },
-    { value: "台南", label: "台南" },
-    { value: "高雄", label: "高雄" },
-    { value: "礁溪鄉", label: "礁溪鄉" },
-  ];
-
   const selectStyle = {
     control: (baseStyles, state) => ({
       ...baseStyles,
@@ -41,7 +33,7 @@ const DeleteDialog = ({
     }),
     singleValue: (baseStyles, state) => ({
       ...baseStyles,
-      color: "white", // 字體顏色
+      color: "bg-gray-800", // 字體顏色
     }),
     option: (baseStyles, state) => ({
       ...baseStyles,
@@ -91,6 +83,15 @@ const DeleteDialog = ({
     });
   };
 
+  const changeType = (e) => {
+    setNewData((prevData) => {
+      return {
+        ...prevData,
+        type: e.value,
+      };
+    });
+  };
+
   const deleteUrl = (url) => {
     setNewData((prevData) => {
       return {
@@ -102,7 +103,10 @@ const DeleteDialog = ({
 
   const send = async () => {
     if (data._id) {
-      const res = await axios.put(`hotels/${newData._id}`, newData);
+      const res = await axios.put(
+        `${process.env.REACT_APP_PUBLIC_URL}/hotels/${newData._id}`,
+        newData
+      );
       if (res.status === 200) {
         handleClose();
         toast("修改成功");
@@ -180,18 +184,12 @@ const DeleteDialog = ({
             <label htmlFor="type" className="block text-md font-medium ">
               飯店種類
             </label>
-            <select
-              id="type"
-              className="text-xl bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
-              onChange={handleInputChange}
-              defaultValue={data._id ? newData.type : "飯店"}
-            >
-              <option value="飯店">飯店</option>
-              <option value="公寓">公寓</option>
-              <option value="渡假村">渡假村</option>
-              <option value="Villa">Villa</option>
-            </select>
-
+            <Select
+              defaultValue={backType.find((i) => i.value === data.type)}
+              className="w-full"
+              options={backType}
+              onChange={changeType}
+            />
             <label htmlFor="city" className="block text-md font-medium ">
               城市
             </label>
@@ -199,7 +197,6 @@ const DeleteDialog = ({
               defaultValue={areaList.find((i) => i.value === data.city)}
               className="w-full"
               options={areaList}
-              styles={selectStyle}
               onChange={changeArea}
             />
             <label htmlFor="address" className="block text-md font-medium ">

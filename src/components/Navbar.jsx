@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faBed,
   faCar,
@@ -12,6 +12,7 @@ import { useLocation } from "react-router-dom";
 import { LoginContext } from "../components/context/LoginContext";
 import { logout } from "../components/constants/actionTypes.js";
 const Navbar = () => {
+  const navigate = useNavigate();
   const { user, dispatch } = useContext(LoginContext);
   const location = useLocation();
   const submit =
@@ -26,6 +27,12 @@ const Navbar = () => {
     { icon: faTaxi, name: "機場計程車" },
   ];
   const [tagActive, setTagActive] = useState("住宿");
+
+  const changeTag = (name) => {
+    setTagActive(name);
+    console.log(name);
+    if (name === "住宿") navigate("/");
+  };
 
   const handleClick = () => {
     dispatch({ type: logout });
@@ -47,31 +54,32 @@ const Navbar = () => {
             {submit && (
               <div>
                 {user ? (
-                  <>
+                  <div className="flex items-center gap-4">
                     {user.isAdmin && (
-                      <Link to="/orderslist">
-                        <button className="mr-5 px-3 py-1 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white">
+                      <Link to="/backOrderslist">
+                        <button className=" px-3 py-2 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white ease-in-out duration-300">
                           進入後台
                         </button>
                       </Link>
                     )}
-                    <span className="mr-3">{user.username}</span>
+                    <span className="inline-block w-10 h-10 rounded-full bg-cover bg-mugShot"></span>
+                    <span className="text-xl text-white">{user.username}</span>
                     <button
                       onClick={handleClick}
-                      className="px-3 py-1 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white"
+                      className="px-3 py-2 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white ease-in-out duration-300"
                     >
                       登出
                     </button>
-                  </>
+                  </div>
                 ) : (
                   <>
                     <Link to="/register">
-                      <button className="px-3 py-1 border border-white border-opacity-50 rounded-lg mr-3  text-white hover:bg-opacity-20 hover:bg-white">
+                      <button className="px-3 py-2 border border-white border-opacity-50 rounded-lg mr-3  text-white hover:bg-opacity-20 hover:bg-white ease-in-out duration-300">
                         註冊
                       </button>
                     </Link>
                     <Link to="/login">
-                      <button className="px-3 py-1 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white">
+                      <button className="px-3 py-2 border border-white border-opacity-50 rounded-lg  text-white hover:bg-opacity-20 hover:bg-white ease-in-out duration-300">
                         登入
                       </button>
                     </Link>
@@ -91,7 +99,7 @@ const Navbar = () => {
                     : ""
                 }`}
                 key={item.name}
-                onClick={() => setTagActive(item.name)}
+                onClick={() => changeTag(item.name)}
               >
                 <FontAwesomeIcon icon={item.icon} />
                 <span className="ml-2">{item.name}</span>

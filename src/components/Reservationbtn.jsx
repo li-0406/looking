@@ -14,10 +14,9 @@ import { motion } from "framer-motion";
 const Reservationbtn = ({ onClose, id, night, pic }) => {
   const navgate = useNavigate();
   const { data, loading, error } = useFetch(`/rooms/findHotel/${id}`);
-
   const { date, options } = useContext(OptionsContext);
   const { user } = useContext(LoginContext);
-  console.log(data);
+  console.log(date);
 
   const { datesList } = ReservationDatesList(
     date[0].startDate,
@@ -131,9 +130,8 @@ const Reservationbtn = ({ onClose, id, night, pic }) => {
         }}
       >
         <div className="container max-w-screen-lg">
-          <div className="bg-slate-300 flex justify-between p-3 rounded-t-xl">
-            <h1 className="text-2xl">空房情況</h1>
-            <h2>
+          <div className="bg-slate-500 flex justify-between p-3 rounded-t-lg">
+            <h1 className="text-white">
               {`${format(date[0].startDate, "yyyy-MM-dd")} - ${format(
                 date[0].endDate,
                 "yyyy-MM-dd"
@@ -141,8 +139,11 @@ const Reservationbtn = ({ onClose, id, night, pic }) => {
               {options.adult} 位大人
               {options.children !== 0 && `、${options.children} 位小孩`} 入住
               {night} 晚
-            </h2>
-            <span className="text-xl cursor-pointer" onClick={onClose}>
+            </h1>
+            <span
+              className="text-xl cursor-pointer text-white"
+              onClick={onClose}
+            >
               關閉 <FontAwesomeIcon icon={faXmark} className="text-xl" />
             </span>
           </div>
@@ -194,9 +195,11 @@ const Reservationbtn = ({ onClose, id, night, pic }) => {
             </table>
             <div className="flex justify-center">
               <button
-                disabled={roomNumber.length == 0}
-                className={`p-3 border rounded-lg m-3 ${
-                  roomNumber.length == 0 ? "cursor-not-allowed" : ""
+                disabled={roomNumber.length === 0}
+                className={`p-3 border rounded-lg m-3 border-slate-500  ${
+                  roomNumber.length === 0
+                    ? "cursor-not-allowed"
+                    : "hover:bg-slate-500 hover:text-white ease-in-out duration-300"
                 }`}
                 onClick={handleClick}
               >

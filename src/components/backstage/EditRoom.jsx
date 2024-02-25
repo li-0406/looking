@@ -49,7 +49,10 @@ const DeleteDialog = ({
 
   const send = async () => {
     if (data._id) {
-      const res = await axios.put(`/rooms/${newData._id}`, newData);
+      const res = await axios.put(
+        `${process.env.REACT_APP_PUBLIC_URL}/rooms/${newData._id}`,
+        newData
+      );
       if (res.status === 200) {
         handleClose();
         toast("修改成功");

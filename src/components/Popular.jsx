@@ -17,13 +17,15 @@ const Feature = () => {
       ) : (
         <>
           {data.map((item) => (
-            <Link>
-              <div key={item._id} className="cursor-pointer w-full">
-                <img
-                  src={item.photos[0]}
-                  className="rounded-xl mb-2 w-full"
-                  alt=""
-                />
+            <Link key={item._id}>
+              <div className="cursor-pointer w-full">
+                <div className="h-[224px] mb-3">
+                  <img
+                    src={item.photos[0]}
+                    className="rounded-xl w-full"
+                    alt=""
+                  />
+                </div>
 
                 <div className="flex flex-col">
                   <span className=" font-semibold text-xl">{item.name}</span>

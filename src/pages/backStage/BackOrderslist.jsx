@@ -25,7 +25,7 @@ const Backstage = () => {
 
   const deleteOrder = async () => {
     console.log(deleteId);
-    await axios.delete(`order/${deleteId}`);
+    await axios.delete(`${process.env.REACT_APP_PUBLIC_URL}/order/${deleteId}`);
     setRefresh(!refresh);
     closeDelete();
     setToastTf(true);

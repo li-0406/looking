@@ -30,7 +30,9 @@ const Backstage = () => {
     setEditTf(false);
   };
   const deleteOrder = async () => {
-    const res = await axios.delete(`/hotels/${id}`);
+    const res = await axios.delete(
+      `${process.env.REACT_APP_PUBLIC_URL}/hotels/${id}`
+    );
 
     if (res.status === 200) {
       closeDelete();
@@ -131,7 +133,7 @@ const Backstage = () => {
                 </td>
                 <td>{i._id}</td>
                 <td>
-                  <Link to={`/roomslist/${i._id}`}>
+                  <Link to={`/backRoomslist/${i._id}`}>
                     <button
                       className="border border-blue-500 p-3 bg-blue-500 rounded-lg hover:bg-transparent ease-in-out duration-200"
                       onClick={() => openRoom(i)}

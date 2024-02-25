@@ -10,6 +10,9 @@ import {
   faXmark,
   faAngleLeft,
   faAngleRight,
+  faWifi,
+  faElevator,
+  faSprayCanSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
@@ -38,6 +41,13 @@ const Hotel = () => {
     setOpenReservation(false);
   };
   const list = ["資訊&房價", "設施", "訂房須知", "房客評價"];
+  const facility = [
+    { name: "禁菸客房", icon: faBanSmoking },
+    { name: "無障礙設施", icon: faWheelchair },
+    { name: "免費無線網路", icon: faWifi },
+    { name: "電梯", icon: faElevator },
+    { name: "每日清潔服務", icon: faSprayCanSparkles },
+  ];
   const handleHover = (e) => {
     gsap.to(comments, {
       css: {
@@ -84,16 +94,16 @@ const Hotel = () => {
       {openSlider && (
         <div className="fixed w-full h-screen z-50 bg-black/80 flex justify-center items-center">
           <div className=" container max-w-screen-lg ">
-            <div className="bg-slate-300 flex justify-between p-3 rounded-t-xl">
-              <h1 className="text-2xl">{data.name}</h1>
+            <div className="bg-slate-700 flex justify-between p-3 rounded-t-lg">
+              <h1 className="text-xl text-white">{data.name}</h1>
               <span
-                className="text-xl cursor-pointer"
+                className="text-xl cursor-pointer text-white"
                 onClick={() => setOpenSlider(false)}
               >
                 關閉 <FontAwesomeIcon icon={faXmark} className="text-xl" />
               </span>
             </div>
-            <div className="flex items-center justify-between bg-white p-5 rounded-b-xl ">
+            <div className="flex items-center justify-between bg-white p-5 rounded-b-lg ">
               <FontAwesomeIcon
                 icon={faAngleLeft}
                 className="text-4xl cursor-pointer flex-1 select-none"
@@ -102,7 +112,7 @@ const Hotel = () => {
               <img
                 src={data.photos[sliderIndex]}
                 alt=""
-                className="w-[70%] rounded-xl select-none"
+                className="w-[70%] rounded-lg select-none"
               />
               <FontAwesomeIcon
                 icon={faAngleRight}
@@ -119,7 +129,10 @@ const Hotel = () => {
         <div className="flex gap-2">
           {list.map((i, index) => {
             return (
-              <button className="bg-slate-300 p-4 rounded-xl" key={index}>
+              <button
+                className="bg-slate-300 p-3 rounded-lg border-slate-500 border"
+                key={index}
+              >
                 {i}
               </button>
             );
@@ -135,7 +148,7 @@ const Hotel = () => {
           </div>
           <div>
             <button
-              className="bg-slate-500 p-3 rounded-xl block"
+              className="bg-slate-500 p-3 block text-white  rounded-lg border  border-slate-500 hover:bg-transparent hover:text-black ease-in-out duration-300"
               onClick={handleReservation}
             >
               現在就預定
@@ -154,7 +167,7 @@ const Hotel = () => {
             onMouseEnter={(e) => handleHover(e)}
           >
             <div className="flex gap-3">
-              <div className="bg-slate-300 flex items-center p-3 rounded-xl ml-2">
+              <div className="bg-slate-300 flex items-center p-3 rounded-lg ml-2">
                 <span className="text-xl">8.3</span>
               </div>
               <div>
@@ -209,14 +222,14 @@ const Hotel = () => {
           <div className="col-span-4 flex flex-col gap-5">
             <p>{data.desc}</p>
           </div>
-          <div className="col-span-2 bg-slate-300 flex flex-col gap-5 justify-between p-5">
+          <div className="col-span-2 bg-slate-300 flex flex-col gap-5 justify-between p-5 rounded-lg">
             <h4 className="text-xl font-semibold">住宿特色</h4>
             <p>{data.distance}</p>
             <h4 className="text-2xl">
               TWD {location.state.totalHotelsPrice?.toLocaleString()}
             </h4>
             <button
-              className="w-full p-3 bg-slate-500 rounded-lg"
+              className="w-full p-3 text-white bg-slate-500 rounded-lg border  border-slate-500 hover:bg-transparent hover:text-black ease-in-out duration-300"
               onClick={handleReservation}
             >
               現在就預定
@@ -228,15 +241,17 @@ const Hotel = () => {
           <div className="col-span-4">
             <h4 className="text-xl font-semibold">熱門設施</h4>
             <div className="bg-gray-200 h-1 my-2"></div>
-            <span>
-              <FontAwesomeIcon icon={faBanSmoking} />
-              禁菸客房
-            </span>
-
-            <span>
-              <FontAwesomeIcon icon={faWheelchair} />
-              無障礙設施
-            </span>
+            <div className="flex gap-6">
+              {facility.map((item) => (
+                <span key={item.name}>
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className="mr-2 text-slate-400 text-2xl"
+                  />
+                  {item.name}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

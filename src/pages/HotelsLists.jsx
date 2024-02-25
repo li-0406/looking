@@ -14,13 +14,14 @@ import * as locales from "react-date-range/dist/locale";
 //用它來叫出不同版本的語言翻譯，把日曆換成中文
 import { DateRange } from "react-date-range";
 import Select from "react-select";
-import { area } from "../hooks/search.js";
+import { areaList } from "../data/homeData.js";
 import { new_Options } from "../components/constants/actionTypes.js";
 import { OptionsContext } from "../components/context/OptionsContext.js";
 import useFetch from "../hooks/useFetch.js";
 import { ReservationDatesAndPrice } from "../datesCalcualate.js";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material";
+
 const HotelsList = () => {
   const { city, date, options, dispatch } = useContext(OptionsContext);
   const navigate = useNavigate();
@@ -41,8 +42,9 @@ const HotelsList = () => {
   const [destination, setDestination] = useState(city);
   const [lowPrice, setLowPrice] = useState(0);
   const [hightPrice, setHightPrice] = useState(9999);
+
   const searchUrl = `/hotels?${
-    destination ? "city=" + destination.value : "popularHotel=true"
+    destination ? "city=" + destination : "popularHotel=true"
   }&lowestPrice=${lowPrice}&highestPrice=${hightPrice}`;
   const [fetchDataUrl, setFetchDataUrl] = useState(searchUrl);
   const { data, loading, error } = useFetch(fetchDataUrl);
@@ -55,7 +57,6 @@ const HotelsList = () => {
     i["datesLength"] = datesLength;
     i["totalHotelsPrice"] = totalHotelsPrice;
   });
-  console.log(data);
 
   const people = [
     { name: "成人", num: conditions.adult },
@@ -136,11 +137,11 @@ const HotelsList = () => {
             <div className="bg-orange-400 p-6">
               <p>目的地/住宿名稱</p>
               <Select
-                defaultValue={destination ? destination : "要去哪裡?"}
+                defaultValue={areaList.find((i) => i.value === destination)}
                 className="w-full"
-                options={area}
+                options={areaList}
                 styles={selectStyle}
-                onChange={setDestination}
+                onChange={(e) => setDestination(e.value)}
               />
               <p className="mt-4">入住/退房日期</p>
               <div className="relative">
@@ -230,18 +231,19 @@ const HotelsList = () => {
           </div>
           <div className="col-span-3">
             <h1 className="text-2xl mb-6">
-              {city.value || "推薦熱門景點"}：找到 {data.length} 間住宿
+              {city || "推薦熱門景點"}：找到 {data.length} 間住宿
             </h1>
 
             {data.map((i) => (
               <div
-                className="flex gap-6 border p-5 rounded-xl my-4"
+                className="flex gap-6 border p-5 rounded-lg my-4"
                 key={i._id}
               >
                 <img
                   src={i.photos[0]}
                   alt=""
-                  className="w-[30%] h-[30%] rounded-xl"
+                  className="w-[30%] h-[30%] rounded-lg cursor-pointer"
+                  onClick={() => toDetail(i)}
                 />
                 <div>
                   <h2 className="text-3xl">{i.name}</h2>
@@ -260,7 +262,7 @@ const HotelsList = () => {
                       </p>
                       <p className="text-gray-400">{i.comments}則評論</p>
                     </div>
-                    <div className="bg-slate-300 flex items-center p-3 rounded-xl ml-2">
+                    <div className="bg-slate-300 border border-slate-500 flex items-center p-3 rounded-lg ml-2">
                       <span className="text-xl">{i.rating}</span>
                     </div>
                   </div>
@@ -285,7 +287,7 @@ const HotelsList = () => {
 
                     {i.datesLength ? (
                       <div
-                        className="bg-slate-500 py-3 px-6 rounded-xl mt-3 block cursor-pointer"
+                        className="bg-slate-500 py-3 px-6 rounded-lg mt-3 block cursor-pointer text-white border  border-slate-500 hover:bg-transparent hover:text-black ease-in-out duration-300"
                         onClick={() => toDetail(i)}
                       >
                         查看客房供應情況
@@ -304,7 +306,7 @@ const HotelsList = () => {
                           }
                           followCursor
                         >
-                          <div className="bg-slate-500 py-3 px-6 rounded-xl mt-3 block cursor-pointer">
+                          <div className="bg-slate-500 py-3 px-6 rounded-lg mt-3 block cursor-pointer">
                             查看客房供應情況
                             <FontAwesomeIcon
                               icon={faChevronRight}
