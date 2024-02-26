@@ -51,7 +51,8 @@ const DeleteDialog = ({
     if (data._id) {
       const res = await axios.put(
         `${process.env.REACT_APP_PUBLIC_URL}/rooms/${newData._id}`,
-        newData
+        newData,
+        { withCredentials: true }
       );
       if (res.status === 200) {
         handleClose();
@@ -68,7 +69,8 @@ const DeleteDialog = ({
       try {
         const res = await axios.post(
           `${process.env.REACT_APP_PUBLIC_URL}/rooms/${id}`,
-          newData
+          newData,
+          { withCredentials: true }
         );
         if (res.status === 200) {
           handleClose();

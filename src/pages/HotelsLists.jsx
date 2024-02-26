@@ -246,7 +246,7 @@ const HotelsList = () => {
                   onClick={() => toDetail(i)}
                 />
                 <div>
-                  <h2 className="text-3xl">{i.name}</h2>
+                  <h2 className="text-2xl">{i.name}</h2>
                   <p className="mt-3">{i.distance}</p>
                   <div className="mt-10 border-l-2 pl-3">
                     <p>精緻雙床房</p>

@@ -36,6 +36,7 @@ const Navbar = () => {
 
   const handleClick = () => {
     dispatch({ type: logout });
+    if (location.pathname.includes("back")) navigate("/");
   };
   return (
     <div className="bg-slate-700 py-5">

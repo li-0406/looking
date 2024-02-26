@@ -64,7 +64,8 @@ const Backstage = () => {
 
   const deleteOrder = async () => {
     const res = await axios.delete(
-      ` ${process.env.REACT_APP_PUBLIC_URL}/rooms/${id}/${deleteId}`
+      ` ${process.env.REACT_APP_PUBLIC_URL}/rooms/${id}/${deleteId}`,
+      { withCredentials: true }
     );
     console.log(res);
     if (res.status === 200) {

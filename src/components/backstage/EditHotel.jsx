@@ -127,7 +127,8 @@ const DeleteDialog = ({
       try {
         const res = await axios.post(
           `${process.env.REACT_APP_PUBLIC_URL}/hotels`,
-          newData
+          newData,
+          { withCredentials: true }
         );
         if (res.status === 200) {
           handleClose();

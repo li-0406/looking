@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../components/context/LoginContext";
@@ -27,16 +27,29 @@ const Login = () => {
       console.log(loginData);
       const res = await axios.post(
         `${process.env.REACT_APP_PUBLIC_URL}/auth/login`,
-        loginData
+        loginData,
+        { withCredentials: true }
       );
       console.log(res.data.userData);
       dispatch({ type: login_success, payload: res.data.userData });
       navigate("/");
     } catch (error) {
       console.log(error.respose);
-      dispatch({ type: login_failure, payload: error.response.data });
+      dispatch({ type: login_failure, payload: error.response });
     }
   };
+
+  const [admin, setAdmin] = useState(false);
+  const adminLogin = () => {
+    setLoginData({
+      account: "管理員測試帳號",
+      password: "00",
+    });
+    setAdmin(!admin);
+  };
+  useEffect(() => {
+    handleClick();
+  }, [admin]);
   return (
     <div>
       <Navbar />
@@ -63,9 +76,15 @@ const Login = () => {
           <div class="mt-3">
             <div
               onClick={handleClick}
-              class="w-full text-center bg-slate-500 hover:bg-slate-600 font-bold text-xl rounded-md p-4 cursor-pointer select-none"
+              class="w-full text-center border border-slate-500  hover:bg-slate-500 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
             >
               登入
+            </div>
+            <div
+              onClick={adminLogin}
+              class="mt-2 w-full text-center border border-slate-800  hover:bg-slate-800 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
+            >
+              管理員一鍵登入
             </div>
           </div>
           <Link to="/register">

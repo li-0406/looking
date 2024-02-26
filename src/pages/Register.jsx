@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { LoginContext } from "../components/context/LoginContext";
+import { login_success } from "../components/constants/actionTypes.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { dispatch } = useContext(LoginContext);
   const [registerData, setRegisterData] = useState({
     username: undefined,
     // email: undefined,
@@ -25,10 +28,20 @@ const Login = () => {
     )
       return;
     try {
-      const res = await axios.post("/auth/register", registerData);
+      const res = await axios.post(
+        `${process.env.REACT_APP_PUBLIC_URL}/auth/register`,
+        registerData
+      );
       console.log(res);
       setError("");
-      navigate("/login", res);
+
+      const loginRes = await axios.post(
+        `${process.env.REACT_APP_PUBLIC_URL}/auth/login`,
+        { account: registerData.username, password: registerData.password },
+        { withCredentials: true }
+      );
+      dispatch({ type: login_success, payload: loginRes.data.userData });
+      navigate("/");
     } catch (error) {
       setError(error.response.data.Message);
       console.log(error.response.data.Message);
