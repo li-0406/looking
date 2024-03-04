@@ -53,9 +53,12 @@ const Reservationbtn = ({ onClose, id, night, pic }) => {
     try {
       await Promise.all(
         roomNumber.map(async (i) => {
-          const res = await axios.put(`/rooms/reservartiondates/${i}`, {
-            dates: datesList,
-          });
+          const res = await axios.put(
+            `${process.env.REACT_APP_PUBLIC_URL}/rooms/reservartiondates/${i}`,
+            {
+              dates: datesList,
+            }
+          );
           console.log(res);
         })
       );
@@ -86,7 +89,11 @@ const Reservationbtn = ({ onClose, id, night, pic }) => {
   };
 
   const [createOrderState, setCreateOrderState] = useState(false);
-  const { order } = useCreateOrder("/order", orderData, createOrderState);
+  const { order } = useCreateOrder(
+    `${process.env.REACT_APP_PUBLIC_URL}/order`,
+    orderData,
+    createOrderState
+  );
   const handleClick = () => {
     try {
       setOrderData((item) => ({

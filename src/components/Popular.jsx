@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useFetch from "../hooks/useFetch";
 import Skeleton from "./Skeleton";
 import { Link } from "react-router-dom";
 
-const Feature = () => {
+const Feature = (props) => {
   const { data, loading, error } = useFetch("/hotels?popularHotel=true"); //所有飯店
-
+  useEffect(() => {
+    props.closeLoading();
+  }, [data]);
   return (
     <div className="grid grid-cols-4 gap-8">
       {loading ? (

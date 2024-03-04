@@ -95,7 +95,7 @@ const HotelsList = () => {
     }),
     singleValue: (baseStyles, state) => ({
       ...baseStyles,
-      color: "white", // 设置选中项字体颜色
+      color: "white",
     }),
     option: (baseStyles, state) => ({
       ...baseStyles,
@@ -106,7 +106,7 @@ const HotelsList = () => {
     }),
     input: (baseStyles) => ({
       ...baseStyles,
-      color: "gray", // 设置输入文本颜色
+      color: "gray",
     }),
   };
 
@@ -134,7 +134,7 @@ const HotelsList = () => {
       <div className="container mx-auto max-w-screen-xl  pt-20">
         <div className="grid grid-cols-4 gap-9">
           <div>
-            <div className="bg-orange-400 p-6">
+            <div className="bg-slate-400 p-6">
               <p>目的地/住宿名稱</p>
               <Select
                 defaultValue={areaList.find((i) => i.value === destination)}
@@ -222,7 +222,7 @@ const HotelsList = () => {
               </div>
 
               <button
-                className="block bg-orange-200 w-full p-2 mt-3 rounded-md"
+                className="block bg-orange-300 border-orange-300 border-solid border hover:bg-transparent hover:text-white w-full p-2 mt-3 rounded-md ease-in-out duration-300"
                 onClick={search}
               >
                 搜尋
@@ -243,7 +243,6 @@ const HotelsList = () => {
                   src={i.photos[0]}
                   alt=""
                   className="w-[30%] h-[30%] rounded-lg cursor-pointer"
-                  onClick={() => toDetail(i)}
                 />
                 <div>
                   <h2 className="text-2xl">{i.name}</h2>

@@ -24,7 +24,6 @@ const Login = () => {
   const handleClick = async () => {
     dispatch({ type: start_login });
     try {
-      console.log(loginData);
       const res = await axios.post(
         `${process.env.REACT_APP_PUBLIC_URL}/auth/login`,
         loginData,
@@ -34,7 +33,6 @@ const Login = () => {
       dispatch({ type: login_success, payload: res.data.userData });
       navigate("/");
     } catch (error) {
-      console.log(error.respose);
       dispatch({ type: login_failure, payload: error.response });
     }
   };
@@ -58,31 +56,29 @@ const Login = () => {
           <h1 className="text-2xl font-bold">登入</h1>
           <input
             id="account"
-            v-model="datamsg.username"
             type="text"
-            placeholder="帳號"
-            class="mt-8 block w-full p-3 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+            placeholder="預設帳號：王小明"
+            className="mt-8 block w-full p-3 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
             onChange={handleChange}
           />
           <input
             id="password"
-            v-model="datamsg.password"
             type="password"
-            placeholder="密碼"
-            class="my-5 block w-full p-3 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+            placeholder="預設密碼：0000"
+            className="my-5 block w-full p-3 bg-white border border-slate-300 rounded-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
             onChange={handleChange}
           />
 
-          <div class="mt-3">
+          <div className="mt-3">
             <div
               onClick={handleClick}
-              class="w-full text-center border border-slate-500  hover:bg-slate-500 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
+              className="w-full text-center border border-slate-500  hover:bg-slate-500 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
             >
               登入
             </div>
             <div
               onClick={adminLogin}
-              class="mt-2 w-full text-center border border-slate-800  hover:bg-slate-800 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
+              className="mt-2 w-full text-center border border-slate-800  hover:bg-slate-800 hover:text-white font-bold text-xl rounded-md p-4 cursor-pointer select-none ease-in-out duration-300"
             >
               管理員一鍵登入
             </div>

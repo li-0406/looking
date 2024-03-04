@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Feature from "../components/Feature";
 import PostCard from "../components/PostCard";
-import Footer from "../components/Footer";
 import Popular from "../components/Popular";
 import { homeType, searchTaiwan, newLocation } from "../data/homeData.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { LoginContext } from "../components/context/LoginContext.js";
+import { logout } from "../components/constants/actionTypes.js";
 
 const Home = () => {
+  const { dispatch } = useContext(LoginContext);
+  const [loading, setLoading] = useState(true);
   const type = homeType;
   const taiwan = searchTaiwan;
   const card = newLocation;
@@ -15,9 +20,30 @@ const Home = () => {
   const citiesUrl = `/hotels/amountofcities?cities=${taiwan.map(
     (city) => city.name
   )}`;
+  const closeLoading = () => setLoading(false);
+
+  //token過期登出
+  useEffect(() => {
+    const cookies = document.cookie.split(";");
+    const hasToken = cookies.some((i) => i.trim().startsWith("JWT_token"));
+    if (!hasToken) dispatch({ type: "logout" });
+  }, []);
 
   return (
-    <div className="home ">
+    <div className="home">
+      {loading && (
+        <div className="bg-slate-600 bg-opacity-70 w-full h-screen flex justify-center items-center fixed z-50">
+          <svg
+            className="animate-spin h-5 w-5 mr-3 text-white"
+            viewBox="0 0 24 24"
+          >
+            <FontAwesomeIcon icon={faSpinner} />
+          </svg>
+          <span className="text-white animate-pulse">
+            首次進入須加載較久時間，請耐心稍後...
+          </span>
+        </div>
+      )}
       <Navbar />
       <Header />
       <div className="container mx-auto max-w-screen-xl pt-10">
@@ -48,7 +74,7 @@ const Home = () => {
         <h4 className=" font-semibold text-2xl mb-4 mt-15">
           人氣民宿、公寓類型住宿
         </h4>
-        <Popular />
+        <Popular closeLoading={closeLoading} />
       </div>
     </div>
   );

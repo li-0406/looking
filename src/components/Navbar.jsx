@@ -29,9 +29,10 @@ const Navbar = () => {
   const [tagActive, setTagActive] = useState("住宿");
 
   const changeTag = (name) => {
-    setTagActive(name);
-    console.log(name);
-    if (name === "住宿") navigate("/");
+    if (name === "住宿") {
+      navigate("/");
+    }
+    // setTagActive(name);
   };
 
   const handleClick = () => {
@@ -94,10 +95,12 @@ const Navbar = () => {
           {submit &&
             tag.map((item) => (
               <div
-                className={`px-4 py-2 text-white rounded-full cursor-pointer  hover:bg-opacity-10 hover:bg-white ${
+                className={`px-4 py-2 text-white rounded-full   hover:bg-opacity-10 hover:bg-white ${
                   tagActive === item.name
                     ? "border border-white bg-white bg-opacity-10"
                     : ""
+                } ${
+                  item.name === "住宿" ? "cursor-pointer" : "cursor-not-allowed"
                 }`}
                 key={item.name}
                 onClick={() => changeTag(item.name)}
