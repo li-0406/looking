@@ -26,6 +26,7 @@ const Home = () => {
   useEffect(() => {
     const cookies = document.cookie.split(";");
     const hasToken = cookies.some((i) => i.trim().startsWith("JWT_token"));
+    console.log(cookies);
     if (!hasToken) dispatch({ type: "logout" });
   }, []);
 

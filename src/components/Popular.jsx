@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const Feature = (props) => {
   const { data, loading, error } = useFetch("/hotels?popularHotel=true"); //所有飯店
-  console.log(data);
   useEffect(() => {
     if (data.length) props.closeLoading();
   }, [data]);
