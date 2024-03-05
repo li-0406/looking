@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 
 const Feature = (props) => {
   const { data, loading, error } = useFetch("/hotels?popularHotel=true"); //所有飯店
+  console.log(data);
   useEffect(() => {
-    props.closeLoading();
+    if (data.length) props.closeLoading();
   }, [data]);
   return (
     <div className="grid grid-cols-4 gap-8">
