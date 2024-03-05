@@ -9,14 +9,14 @@ import BackHotelslist from "./pages/backStage/BackHotelslist";
 import BackRoomslist from "./pages/backStage/BackRoomslist";
 import BackUserslist from "./pages/backStage/BackUserslist";
 import Footer from "./components/Footer";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       {/* basename="/looking" */}
-      <BrowserRouter basename="/looking">
-        <Routes>
+      <Router basename="/looking">
+        <Switch>
           <Route path="/" element={<Home />} />
           <Route path="/hotelsLists" element={<HotelsLists />} />
           <Route path="/hotel/:id" element={<Hotel />} />
@@ -27,9 +27,9 @@ function App() {
           <Route path="/backHotelslist" element={<BackHotelslist />} />
           <Route path="/backRoomslist/:id" element={<BackRoomslist />} />
           <Route path="/backUserslist" element={<BackUserslist />} />
-        </Routes>
+        </Switch>
         <Footer />
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
