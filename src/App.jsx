@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       {/* basename="/looking" */}
-      <HashRouter basename="/looking">
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hotelsLists" element={<HotelsLists />} />
