@@ -9,13 +9,13 @@ import BackHotelslist from "./pages/backStage/BackHotelslist";
 import BackRoomslist from "./pages/backStage/BackRoomslist";
 import BackUserslist from "./pages/backStage/BackUserslist";
 import Footer from "./components/Footer";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       {/* basename="/looking" */}
-      <Router basename="/looking">
+      <HashRouter basename="/looking">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hotelsLists" element={<HotelsLists />} />
@@ -29,7 +29,7 @@ function App() {
           <Route path="/backUserslist" element={<BackUserslist />} />
         </Routes>
         <Footer />
-      </Router>
+      </HashRouter>
     </div>
   );
 }
